@@ -37,10 +37,30 @@ class Snake {
         // Calculate new head location, add a new segment at that
         // location (at the start of the body array), then
         // remove the last element of the body array
-        let new_head_x = this.body[0][0] + this.x_speed * scl;
-        let new_head_y = this.body[0][1] + this.y_speed * scl;
+        let new_head_x;
+        let new_head_y;
+        let current_head_x = this.body[0][0];
+        let current_head_y = this.body[0][1];
+        
+        if (current_head_x < 0 - scl) {
+            new_head_x = width;
+        } else if (current_head_x > width + scl) {
+            new_head_x = 0;
+        } else {
+            new_head_x = current_head_x + this.x_speed * scl;
+        }
+
+        if (current_head_y < 0) {
+            new_head_y = height;
+        } else if (current_head_y > height + scl) {
+            new_head_y = 0;
+        } else {
+            new_head_y = current_head_y + this.y_speed * scl;
+        }        
+
         this.body.unshift([new_head_x, new_head_y]);
-        this.body.pop();    }
+        this.body.pop();
+    }
 
     show() {
         fill(255);
