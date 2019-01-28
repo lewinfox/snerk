@@ -18,8 +18,10 @@ class Snake {
     }
 
     grow() {
+        console.log('GROW');        
         let new_segment = this.body[this.body.length - 1];
         this.body.push(new_segment);
+        this.update();
     }
 
     update() {
@@ -68,7 +70,7 @@ function keyPressed() {
             break;
         case LEFT_ARROW:
             snake.x_speed = -1;
-            break;    
+            break;
         default:
             break;
     }
@@ -87,6 +89,10 @@ function draw() {
 
     for (let i = food.length - 1; i >= 0; i--) {
         food[i].show();
+    }
+
+    if (frameCount % 20 == 0) {
+        snake.grow();
     }
 
     snake.update();
