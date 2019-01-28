@@ -23,6 +23,7 @@ class Snake {
             food.pop();
             food.push(new Food());
             this.grow();
+            frameRate(frameRate() + 1);  // frameRate ++
         }
     }
 
