@@ -25,7 +25,7 @@ class Snake {
     }
 
     update() {
-        // Calculate new head location, add a new item at that
+        // Calculate new head location, add a new segment at that
         // location (at the start of the body array), then
         // remove the last element of the body array
         let new_head_x = this.body[0][0] + this.x_speed * scl;
@@ -44,9 +44,9 @@ class Snake {
 
 class Food {
 
-    constructor() {
-        this.x = Math.random() * width * scl;
-        this.y = Math.random() * height * scl;
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
     }
 
     show() {
@@ -79,7 +79,7 @@ function keyPressed() {
 function setup() {
     let cnv = createCanvas(400, 400);
     cnv.parent('canvas-container');
-    food.push(new Food());
+    food.push(new Food(Math.random(width) * scl, Math.random(height) * scl));
     snake = new Snake(height / 2, width / 2);
     frameRate(5);
 }
@@ -87,7 +87,7 @@ function setup() {
 function draw() {
     background(32);
 
-    for (let i = food.length - 1; i >= 0; i--) {
+    for (let i = 0; i < food.length; i++) {
         food[i].show();
     }
 
