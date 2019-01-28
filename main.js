@@ -17,6 +17,15 @@ class Snake {
         }
     }
 
+    eats(f) {
+        if (this.body[0][0] == f.x && this.body[0][1] == f.y) {
+            console.log('NOM NOM NOM');
+            food.pop();
+            food.push(new Food());
+            this.grow();
+        }
+    }
+
     grow() {
         console.log('GROW');        
         let new_segment = this.body[this.body.length - 1];
@@ -31,8 +40,7 @@ class Snake {
         let new_head_x = this.body[0][0] + this.x_speed * scl;
         let new_head_y = this.body[0][1] + this.y_speed * scl;
         this.body.unshift([new_head_x, new_head_y]);
-        this.body.pop();
-    }
+        this.body.pop();    }
 
     show() {
         fill(255);
@@ -44,9 +52,10 @@ class Snake {
 
 class Food {
 
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
+    constructor() {
+        this.x = Math.floor(Math.random() * scl) * (width / scl);
+        this.y = Math.floor(Math.random() * scl) * (width / scl);
+        console.log(`NEW FOOD AT: ${this.x}, ${this.y}`);
     }
 
     show() {
@@ -79,7 +88,7 @@ function keyPressed() {
 function setup() {
     let cnv = createCanvas(400, 400);
     cnv.parent('canvas-container');
-    food.push(new Food(Math.random(width) * scl, Math.random(height) * scl));
+    food.push(new Food());
     snake = new Snake(height / 2, width / 2);
     frameRate(5);
 }
@@ -91,9 +100,9 @@ function draw() {
         food[i].show();
     }
 
-    if (frameCount % 20 == 0) {
-        snake.grow();
-    }
+    for (let i = 0; i < food.length; i++) {
+        snake.eats(food[i]);
+    } 
 
     snake.update();
     snake.show();
