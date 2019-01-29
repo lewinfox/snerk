@@ -97,20 +97,32 @@ class Food {
 }
 
 function keyPressed() {
-    snake.x_speed = 0;
-    snake.y_speed = 0;
+    // snake.x_speed = 0;
+    // snake.y_speed = 0;
     switch (keyCode) {
         case UP_ARROW:
-            snake.y_speed = -1;
+            snake.x_speed = 0;
+            if (snake.y_speed != 1) {
+                snake.y_speed = -1;
+            }
             break;
         case DOWN_ARROW:
-            snake.y_speed = 1;
+        snake.x_speed = 0;
+            if (snake.y_speed != -1) {
+                snake.y_speed = 1;
+            }
             break;
         case RIGHT_ARROW:
+        snake.y_speed = 0;
+        if (snake.x_speed != -1) {
             snake.x_speed = 1;
+        }
             break;
         case LEFT_ARROW:
-            snake.x_speed = -1;
+        snake.y_speed = 0;
+            if (snake.x_speed != 1) {
+                snake.x_speed = -1;
+            }
             break;
         default:
             break;
