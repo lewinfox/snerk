@@ -43,17 +43,17 @@ class Snake {
         let current_head_x = this.body[0][0];
         let current_head_y = this.body[0][1];
         
-        if (current_head_x < 0 - scl) {
-            new_head_x = width;
-        } else if (current_head_x > width) {
+        if (current_head_x < 0) {
+            new_head_x = width - scl;
+        } else if (current_head_x >= width) {
             new_head_x = 0;
         } else {
             new_head_x = current_head_x + this.x_speed * scl;
         }
 
         if (current_head_y < 0) {
-            new_head_y = height;
-        } else if (current_head_y > height) {
+            new_head_y = height - scl;
+        } else if (current_head_y >= height) {
             new_head_y = 0;
         } else {
             new_head_y = current_head_y + this.y_speed * scl;
