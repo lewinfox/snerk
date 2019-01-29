@@ -66,7 +66,7 @@ class Snake {
     show() {
         fill(255);
         for (let i = 0; i < this.body.length; i++) {
-            rect(this.body[i][0], this.body[i][1], scl, scl);
+            rect(this.body[i][0], this.body[i][1], scl, scl, scl / 4);
         }
     }
 
