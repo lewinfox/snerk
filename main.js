@@ -1,8 +1,15 @@
 console.log('main.js connected');
 
+// In-game variables
 let snake;
 let food = [];
 let scl = 20;
+
+// For displaying the score and high score
+let score = 0;
+let high_score = 0;
+let score_display;
+let high_score_display;
 
 class Snake {
     
@@ -12,7 +19,7 @@ class Snake {
         this.x_speed = 1;
         this.y_speed = 0;
         this.body = [[start_x, start_y]];
-        for (let i = 0; i < length - 1; i++) {
+        for (let i = 1; i < length; i++) {
             this.body.push([start_x - i, start_y]);
         }
     }
@@ -23,12 +30,12 @@ class Snake {
             food.pop();
             food.push(new Food());
             this.grow();
+            increment_score();
             frameRate(frameRate() + 1);  // frameRate ++
         }
     }
 
-    grow() {
-        console.log('GROW');        
+    grow() {      
         let new_segment = this.body[this.body.length - 1];
         this.body.push(new_segment);
         this.update();
@@ -73,6 +80,7 @@ class Snake {
     hits_itself() {
         for (let i = 1; i < this.body.length; i++) {
             if (this.body[0][0] == this.body[i][0] && this.body[0][1] == this.body[i][1]) {
+                console.log('I HIT MYSELF');
                 return true;
             }
         }
@@ -97,8 +105,6 @@ class Food {
 }
 
 function keyPressed() {
-    // snake.x_speed = 0;
-    // snake.y_speed = 0;
     switch (keyCode) {
         case UP_ARROW:
             snake.x_speed = 0;
@@ -132,14 +138,16 @@ function keyPressed() {
 function setup() {
     let cnv = createCanvas(400, 400);
     cnv.parent('canvas-container');
-    food.push(new Food());
-    snake = new Snake(height / 2, width / 2);
-    frameRate(5);
+    score_display = document.getElementById('score-display');
+    high_score_display = document.getElementById('high-score-display')
+    set_up_new_game();
 }
 
 function draw() {
     if (snake.hits_itself()) {
-        background(255, 0, 0)
+        background(255, 0, 0);
+        setTimeout(1000);
+        set_up_new_game();
     } else {
         background(32);
     }
@@ -154,4 +162,26 @@ function draw() {
 
     snake.update();
     snake.show();
+}
+
+function set_up_new_game() {
+    frameRate(5);
+    score = 0;
+    update_score_display();
+    snake = new Snake(height / 2, width / 2);
+    food = [];
+    food.push(new Food());
+}
+
+function update_score_display() {
+    high_score_display.innerHTML = high_score;
+    score_display.innerHTML = score;
+}
+
+function increment_score() {
+    score +=  snake.body.length - 2;
+    if (score > high_score) {
+        high_score = score;
+    }
+    update_score_display();
 }
