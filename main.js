@@ -2,7 +2,7 @@ console.log('main.js connected');
 
 let snake;
 let food = [];
-let scl = 10;
+let scl = 20;
 
 class Snake {
     
@@ -17,7 +17,7 @@ class Snake {
         }
     }
 
-    eats(f) {
+    eats_food(f) {
         if (this.body[0][0] == f.x && this.body[0][1] == f.y) {
             console.log('NOM NOM NOM');
             food.pop();
@@ -45,7 +45,7 @@ class Snake {
         
         if (current_head_x < 0 - scl) {
             new_head_x = width;
-        } else if (current_head_x > width + scl) {
+        } else if (current_head_x > width) {
             new_head_x = 0;
         } else {
             new_head_x = current_head_x + this.x_speed * scl;
@@ -53,7 +53,7 @@ class Snake {
 
         if (current_head_y < 0) {
             new_head_y = height;
-        } else if (current_head_y > height + scl) {
+        } else if (current_head_y > height) {
             new_head_y = 0;
         } else {
             new_head_y = current_head_y + this.y_speed * scl;
@@ -68,6 +68,15 @@ class Snake {
         for (let i = 0; i < this.body.length; i++) {
             rect(this.body[i][0], this.body[i][1], scl, scl);
         }
+    }
+
+    hits_itself() {
+        for (let i = 1; i < this.body.length; i++) {
+            if (this.body[0][0] == this.body[i][0] && this.body[0][1] == this.body[i][1]) {
+                return true;
+            }
+        }
+        return false;
     }
 }
 
@@ -115,14 +124,18 @@ function setup() {
 }
 
 function draw() {
-    background(32);
+    if (snake.hits_itself()) {
+        background(255, 0, 0)
+    } else {
+        background(32);
+    }
 
     for (let i = 0; i < food.length; i++) {
         food[i].show();
     }
 
     for (let i = 0; i < food.length; i++) {
-        snake.eats(food[i]);
+        snake.eats_food(food[i]);
     } 
 
     snake.update();
