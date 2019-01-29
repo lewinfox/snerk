@@ -86,12 +86,13 @@ class Food {
         this.x = Math.floor(Math.random() * scl) * (width / scl);
         this.y = Math.floor(Math.random() * scl) * (width / scl);
         this.color = color(Math.random() * 255, Math.random() * 255, Math.random() * 255);
+        this.corner_radius = Math.random() * scl / 2
         console.log(`NEW FOOD AT: ${this.x}, ${this.y}`);
     }
 
     show() {
         fill(this.color);
-        rect(this.x, this.y, scl, scl);
+        rect(this.x, this.y, scl, scl, this.corner_radius);
     }
 }
 
